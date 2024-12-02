@@ -103,4 +103,53 @@ const filmy = [
 			'Na zámek v podhůří Krkonoš přijíždí jeho nový majitel Štěpán se svojí snoubenkou, krásnou komtesou Blankou, a mladším bratrem Adamem. Cestou kočár nešťastně srazí kolemjdoucí dívku, Adam jí pomůže a ona se do něj zamiluje. Na zámku Adam objeví starou vlašskou knihu, která by měla obsahovat cestu k pokladům. Tajemné značky vlašské knihy však nedokáže vyluštit ani národopisec Jiráček, který v kraji sbírá pověsti a nevychází z údivu nad tím, že zdejší lidé stále věří v Krakonoše. Na zámku se objeví záhadný cizinec a nabídne Štěpánovi, že jej k pokladu za určitých podmínek dovede. Výprava do hor může začít. Naplní se Liduščina láska k Adamovi? Jakou záhadu skrývá starý obraz na zámku Hůrka a co strašlivého se v horách kdysi odehrálo? A kdo je vlastně Krakonoš a jaké je jeho největší tajemství? (csfd.cz, Česká televize)',
 		premiera: '2022-12-24',
 	},
+	{
+		id: 'harry-potter-a-kamen-mudrcu',
+		nazev: 'Harry Potter a Kámen mudrců',
+		plakat: {
+			url: 'harry-potter-kamen-mudrcu-i104639.jpg',
+			sirka: 869,
+			vyska: 1299,
+		},
+		ochutnavka: 'Rodinný fantasy film o čarodějnickém učni z Bradavic.',
+		popis:
+			'Před deseti lety položili čarodějové Brumbál, Hagrid a McGonagallová na práh domu Vernona a Petunie Dursleyových miminko s jizvou na čele. Je to malý Harry Potter, syn Petuniiny zemřelé sestry. Dursleyovi se o něj sice starají, na rozdíl od vlastního syna Dudleyho mu však neprojevují příliš lásky. Když se blíží Harryho jedenácté narozeniny, zjistí ke svému překvapení, že dokáže mluvit s hadem. V den narozenin mu čaroděj Hagrid doručí dort a dopis. Harry se dozví, že jeho rodiče byli čarodějové a nezahynuli při obyčejné autonehodě, ale v boji se zlým Voldemortem. Jizvu na čele si odnesl z tohoto boje. Nyní má právo nastoupit do učení ve Škole kouzel a čar v Bradavicích. Hagrid mu pomůže nakoupit školní pomůcky, včetně kouzelnické hůlky, a potom ho pošle na nádraží, kde z tajného nástupiště 9 3/4 odjíždí expres do Bradavic. Ve vlaku se Harry skamarádí se sympatickou Hermionou a dobráckým Ronem. Společně se pak dostanou na prestižní kolej Nebelvíru. Díky mimořádnému talentu k létání se stane novým chytačem nebelvírského famfrpálového mužstva. Po zápasu čeká žáky Vánoční volno, kterého Harry, Ron a Hermiona využijí k pátrání po tajemství, které střeží v podzemí školy trojhlavý pes.',
+		premiera: '2002-02-14',
+	},
 ]
+
+// Ukol 5
+
+const filmID = window.location.hash.slice(1)
+const filmData = filmy.find(film => film.id === filmID)
+const plakat = document.querySelector("#detail-filmu img")
+const nazev = document.querySelector(".card-title")
+const popis = document.querySelector(".card-text")
+
+plakat.src = filmData.plakat.url
+nazev.textContent = filmData.nazev
+popis.textContent = filmData.popis
+
+// Ukol 6
+
+// Ukol 7
+
+// Ukol 8
+const formularPoznamka = document.querySelector("#note-form")
+formularPoznamka.addEventListener("submit", event => {
+	event.preventDefault()
+	const messageInput = document.querySelector("#message-input")
+	const checkbox = document.querySelector("#terms-checkbox")
+	if(messageInput.value === "") {
+		messageInput.classList.add("is-invalid")
+		messageInput.focus()
+	} else if(messageInput.value !== "" && checkbox.checked === false) {
+		checkbox.classList.add("is-invalid")
+	} else {
+		formularPoznamka.innerHTML = `
+		<p class="card-text">${messageInput.value}</p>
+		`
+	}
+})
+
+// Ukol 9
