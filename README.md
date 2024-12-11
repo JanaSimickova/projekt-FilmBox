@@ -1,17 +1,17 @@
 # FilmBox
 
-Tento projekt je závěrečným projektem v kurzu JavaScript 1 pořádaném neziskovou organizací Czechitas. Jedná se o dlouhodobý kurz základů jazyka JavaScript pro vývoj wenových aplikací.
+Tento projekt je závěrečným projektem v kurzu JavaScript 1 pořádaném neziskovou organizací Czechitas. Jedná se o dlouhodobý kurz základů jazyka JavaScript pro vývoj webových aplikací.
 
 ## Cíl úkolu
 
 Cílem úkolu bylo prověřit, zda si účastnice kurzu osvojili vědomosti, které jim byly předávány v průběhu kurzu, který trval 12 týdnů.
 
 Mezi tyto vědomosti patří např.:
-- práce s proměnnými, objekty a poli
-- práce s řetězci a podmínkami
-- funkce, jejich vytváření a použití
-- využití knihoven
-- události, práce s formuláři
+- práce s proměnnými, objekty a poli,
+- práce s řetězci a podmínkami,
+- funkce, jejich vytváření a použití,
+- využití knihoven,
+- události, práce s formuláři.
 
 ## Rozsah úkolu
 
