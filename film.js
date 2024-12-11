@@ -118,6 +118,7 @@ const filmy = [
 	},
 ]
 
+
 // Ukol 5
 
 const filmID = window.location.hash.slice(1)
@@ -130,11 +131,70 @@ plakat.src = filmData.plakat.url
 nazev.textContent = filmData.nazev
 popis.textContent = filmData.popis
 
+
 // Ukol 6
 
+const premiera = document.querySelector("#premiera")
+const today = dayjs()
+const pocetDni = dayjs(filmData.premiera).diff(today, "day", true)
+const zapisPoctuDni = () => {
+	if(pocetDni < -2) {
+		return "bylo před " + Math.ceil(pocetDni) * -1 + " dny"
+	} else if(pocetDni > - 2 && pocetDni <= - 1) {
+		return "bylo včera"
+	} else if(pocetDni > - 1 && pocetDni <= 0) {
+		return "je dnes"
+	} else if (pocetDni > 0 && pocetDni <= 1) {
+		return "je zítra"
+	} else if(pocetDni > 1 && pocetDni <= 2) {
+		return "je za " + Math.floor(pocetDni) + " den"
+	} else if(pocetDni > 2 && pocetDni <= 5) {
+		return "je za " + Math.floor(pocetDni) + " dny"
+	} else {
+		return "je za " + Math.floor(pocetDni) + " dní"
+	}
+}
+
+premiera.innerHTML = `
+<p>Premiéra <strong>${dayjs(filmData.premiera).format("D.M.YYYY")}</strong>, což ${zapisPoctuDni()}.</p>
+`
+
+
 // Ukol 7
+const hvezdy = document.querySelectorAll(".fa-star")
+let pocet = 0
+let kliknutaHvezda = 0
+
+const zvyrazneniHvezd = (number) => {
+	hvezdy.forEach((item, index) => {
+		if(index + 1 <= number) {
+			item.classList.remove("far")
+			item.classList.add("fas")
+		} else {
+			item.classList.remove("fas")
+			item.classList.add("far")
+		}
+	})
+}
+
+hvezdy.forEach(item => item.addEventListener("click", e => {
+	kliknutaHvezda = Number(e.target.textContent)
+	zvyrazneniHvezd(kliknutaHvezda)
+}))
+
+hvezdy.forEach(item => item.addEventListener("mouseenter", e => {
+	pocet = Number(e.target.textContent)
+	zvyrazneniHvezd(pocet)
+}))
+
+hvezdy.forEach(item => item.addEventListener("mouseleave", () => {
+	zvyrazneniHvezd(kliknutaHvezda)
+}))
+
+
 
 // Ukol 8
+
 const formularPoznamka = document.querySelector("#note-form")
 formularPoznamka.addEventListener("submit", event => {
 	event.preventDefault()
@@ -143,8 +203,9 @@ formularPoznamka.addEventListener("submit", event => {
 	if(messageInput.value === "") {
 		messageInput.classList.add("is-invalid")
 		messageInput.focus()
-	} else if(messageInput.value !== "" && checkbox.checked === false) {
+	} else if(checkbox.checked === false) {
 		checkbox.classList.add("is-invalid")
+		checkbox.focus()
 	} else {
 		formularPoznamka.innerHTML = `
 		<p class="card-text">${messageInput.value}</p>
@@ -152,4 +213,59 @@ formularPoznamka.addEventListener("submit", event => {
 	}
 })
 
+
 // Ukol 9
+
+const elmPrehravac = document.querySelector("#prehravac")
+const elmPlay = document.querySelector(".play")
+const elmVideo = document.querySelector("video")
+const elmPause = document.querySelector(".pause")
+
+if(elmPrehravac !== null) {
+	elmPlay.addEventListener("click", () => elmVideo.play())
+	elmVideo.addEventListener("playing", () => elmPrehravac.classList.add("playing"))
+	elmPause.addEventListener("click", () => elmVideo.pause())
+	elmVideo.addEventListener("pause", () => elmPrehravac.classList.remove("playing"))
+}
+
+const elmCurrentTime = document.querySelector(".current-time")
+
+elmVideo.addEventListener("timeupdate", () => {
+	const pocetPrehranychSekund = Math.floor(elmVideo.currentTime)
+	const minuty = Math.floor(pocetPrehranychSekund / 60)
+	const sekundy = pocetPrehranychSekund % 60
+	elmCurrentTime.textContent = `${String(minuty).padStart(2, "0")}:${String(sekundy).padStart(2, "0")}`
+})
+
+// Bonus k úkolu 9
+
+document.addEventListener("keydown", (e) => {
+	if(e.code === "Space" &&
+		e.target.tagName !== 'TEXTAREA' &&
+		e.target.tagName !== 'INPUT' &&
+		e.target.tagName !== 'BUTTON') {
+		if(elmVideo.paused) {
+			elmVideo.play()
+		} else if(elmVideo.currentTime > 0) {
+			elmVideo.pause()
+		}
+	}
+})
+
+// Extra bonus k úkolu 9
+
+const elmPlayerControls = document.querySelector(".player-controls")
+const pridejTriduHidden = () => elmPlayerControls.classList.add("hidden")
+const odeberTriduHidden = () => elmPlayerControls.classList.remove("hidden")
+
+let	timerId = setTimeout(pridejTriduHidden, 3000)
+
+const obnovTimer = () => {
+	clearTimeout(timerId)
+	odeberTriduHidden()
+	timerId = setTimeout(pridejTriduHidden, 3000)
+}
+
+elmVideo.addEventListener("mousemove", obnovTimer)
+
+document.addEventListener("keydown", obnovTimer)
